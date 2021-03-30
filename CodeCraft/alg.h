@@ -1,75 +1,95 @@
-#ifndef _ALG_H_
-#define _ALG_H_
+ï»¿
 
 class CloudResources
 {
 private:
-	// ÅĞ¶ÏÊäÈëĞÅÏ¢ 
-	// iDigit_Num = 0£º½ÓÏÂÀ´Ã¿ĞĞÎª·şÎñÆ÷ĞÅÏ¢
-	// iDigit_Num = 1£º½ÓÏÂÀ´Ã¿ĞĞÎªĞéÄâ»úĞÅÏ¢
-	// iDigit_Num = 2£º´¦ÀíÓÃ»§ÇëÇó×ÜÌìÊı
-	// iDigit_Num > 3: ½ÓÏÂÀ´Ã¿ĞĞÎªÃ¿ÌìµÄÓÃ»§ÇëÇó
+	// åˆ¤æ–­è¾“å…¥ä¿¡æ¯ 
+	// iDigit_Num = 0ï¼šæ¥ä¸‹æ¥æ¯è¡Œä¸ºæœåŠ¡å™¨ä¿¡æ¯
+	// iDigit_Num = 1ï¼šæ¥ä¸‹æ¥æ¯è¡Œä¸ºè™šæ‹Ÿæœºä¿¡æ¯
+	// iDigit_Num = 2ï¼šå¤„ç†ç”¨æˆ·è¯·æ±‚æ€»å¤©æ•°
+	// iDigit_Num > 3: æ¥ä¸‹æ¥æ¯è¡Œä¸ºæ¯å¤©çš„ç”¨æˆ·è¯·æ±‚
 	int iDigit_Num;
-	int m_iServers_num;// µ±Ç°·şÎñÆ÷ÊıÁ¿£¨ÊµÊ±±ä»¯£©
-	int m_iToday_servers_num;// µ±Ìì·şÎñÆ÷×ÜÁ¿(µÚ¶şÌìÊıÁ¿²Å»á±ä»¯)
-	int m_iVirtualMachines_num;// µ±Ç°ĞéÄâ»úÊıÁ¿
-	int m_iRequestDays;// ÓÃ»§ÇëÇóÌìÊı
-	//long long m_iAllCost;// ×Ü¿ªÏú
-	unordered_map<string, vector<int>> m_hsServers;// ËùÓĞÀàĞÍµÄ·şÎñÆ÷ĞÅÏ¢ key=·şÎñÆ÷ĞÍºÅ£¬value=vector<string>([0]CPUºËÊı,[1]ÄÚ´æ´óĞ¡,[2]Ó²¼ş³É±¾,[3]Ã¿ÈÕÄÜºÄ³É±¾)
-	unordered_map<string, vector<int>> m_hsVirtualMachines;// ËùÓĞÀàĞÍµÄĞéÄâ»úĞÅÏ¢  key=ĞéÄâ»úĞÍºÅ, value=vector<string>([0]CPUºËÊı, [1]ÄÚ´æ´óĞ¡, [2]ÊÇ·ñË«½Úµã²¿Êğ£©
-	unordered_map<int, vector<string>> m_hsUserRequest;// ÓÃ»§ÇëÇó key=m_iRequestDays value=vector<string>£¨ÕâÒ»ÌìµÄËùÓĞÇëÇó£©
-	unordered_map<int, pair<pair<int, int>, pair<int, int>>> m_hsRequested_Servers;// ÒÑ¹ºÂò·şÎñÆ÷ĞÅÏ¢ key=·şÎñÆ÷ID£¬value=pair{A½áµãpair{Ê£ÓàCPU£¬Ê£ÓàÄÚ´æ}£¬B½áµãpair{Ê£ÓàCPU£¬Ê£ÓàÄÚ´æ}}
-	unordered_map<string, pair<pair<int, int>, string>> m_hsRequested_VirtualMachines;// ÒÑÉêÇëĞéÄâ»úĞÅÏ¢ key=ĞéÄâ»úID£¬value=pair{pair{±£´æĞéÄâ»úËùÔÚµÄ·şÎñÆ÷ID£¬ÊÇ·ñË«½Úµã(0£ºË«½Úµã£¬1£ºµ¥½ÚµãÔÚA£¬2£ºµ¥½ÚµãÔÚB)},ĞéÄâ»úÀàĞÍ}
-	vector<string> m_vPurchase_order;// Ã¿Ìì¹ºÂòµÄ·şÎñÆ÷Ë³Ğò
-	vector<pair<string, int>> m_vEachDay_purchase; // Ã¿Ìì¹ºÂòµÄ·şÎñÆ÷ĞÅÏ¢ string=·şÎñÆ÷ĞÍºÅ£¬int=¸ÃĞÍºÅ·şÎñÆ÷¹ºÂòÊıÁ¿
-	vector<pair<int, int>> m_vOrder;//Ó³Éä¹ØÏµ±í
+	int m_iServers_num;// å½“å‰æœåŠ¡å™¨æ•°é‡ï¼ˆå®æ—¶å˜åŒ–ï¼‰
+	int m_iToday_servers_num;// å½“å¤©æœåŠ¡å™¨æ€»é‡(ç¬¬äºŒå¤©æ•°é‡æ‰ä¼šå˜åŒ–)
+	int m_iVirtualMachines_num;// å½“å‰è™šæ‹Ÿæœºæ•°é‡
+	int m_iRequestDays;// ç”¨æˆ·è¯·æ±‚å¤©æ•°
+	int m_iKnown_request_days;
+	
 
-	//unordered_map<string, int> m_hsAll_purchase; // ËùÓĞ¹ºÂòµÄ·şÎñÆ÷ĞÅÏ¢ key=·şÎñÆ÷ĞÍºÅ£¬value=¸ÃĞÍºÅ·şÎñÆ÷¹ºÂòÊıÁ¿
-	vector<pair<int, int>> m_vVirtualMachine_Warehousing;// Ã¿ÌìĞéÄâ»úÈë¿âĞÅÏ¢£¬pair{ĞéÄâ»ú°¡ID£¬pair{±£´æĞéÄâ»úËùÔÚµÄ·şÎñÆ÷ID£¬ÊÇ·ñË«½Úµã 0£ºË«½Úµã£¬1£ºµ¥½ÚµãÔÚA£¬2£ºµ¥½ÚµãÔÚB£©}}
+	//long long m_iAllCost;// æ€»å¼€é”€
+	unordered_map<string, vector<int>> m_hsServers;// æ‰€æœ‰ç±»å‹çš„æœåŠ¡å™¨ä¿¡æ¯ key=æœåŠ¡å™¨å‹å·ï¼Œvalue=vector<string>([0]CPUæ ¸æ•°,[1]å†…å­˜å¤§å°,[2]ç¡¬ä»¶æˆæœ¬,[3]æ¯æ—¥èƒ½è€—æˆæœ¬)
+	unordered_map<string, vector<int>> m_hsVirtualMachines;// æ‰€æœ‰ç±»å‹çš„è™šæ‹Ÿæœºä¿¡æ¯  key=è™šæ‹Ÿæœºå‹å·, value=vector<string>([0]CPUæ ¸æ•°, [1]å†…å­˜å¤§å°, [2]æ˜¯å¦åŒèŠ‚ç‚¹éƒ¨ç½²ï¼‰
+	unordered_map<int, vector<string>> m_hsUserRequest;// ç”¨æˆ·è¯·æ±‚ key=m_iRequestDays value=vector<string>ï¼ˆè¿™ä¸€å¤©çš„æ‰€æœ‰è¯·æ±‚ï¼‰
+	unordered_map<int, pair<pair<int, int>, pair<int, int>>> m_hsRequested_Servers;// å·²è´­ä¹°æœåŠ¡å™¨ä¿¡æ¯ key=æœåŠ¡å™¨IDï¼Œvalue=pair{Aç»“ç‚¹pair{å‰©ä½™CPUï¼Œå‰©ä½™å†…å­˜}ï¼ŒBç»“ç‚¹pair{å‰©ä½™CPUï¼Œå‰©ä½™å†…å­˜}}
+	unordered_map<string, pair<pair<int, int>, string>> m_hsRequested_VirtualMachines;// å·²ç”³è¯·è™šæ‹Ÿæœºä¿¡æ¯ key=è™šæ‹ŸæœºIDï¼Œvalue=pair{pair{ä¿å­˜è™šæ‹Ÿæœºæ‰€åœ¨çš„æœåŠ¡å™¨IDï¼Œæ˜¯å¦åŒèŠ‚ç‚¹(0ï¼šåŒèŠ‚ç‚¹ï¼Œ1ï¼šå•èŠ‚ç‚¹åœ¨Aï¼Œ2ï¼šå•èŠ‚ç‚¹åœ¨B)},è™šæ‹Ÿæœºç±»å‹}
+	unordered_map<int, pair<int, string>> m_hsServers_IdleState;   //å·²è´­ä¹°æœåŠ¡å™¨ä¿¡æ¯2 ï¼Œkey=æœåŠ¡å™¨IDï¼Œ value=pair{æœåŠ¡å™¨ç©ºé—²çŠ¶æ€(0ï¼šç©ºé—²ï¼›1ï¼šå·¥ä½œä¸­)ï¼Œ æœåŠ¡å™¨å‹å·}
+	unordered_map<int, vector<string>> m_hsServers_UseInfo;   //å·²è´­ä¹°çš„æœåŠ¡å™¨çš„ä½¿ç”¨ä¿¡æ¯ï¼Œint=æœåŠ¡å™¨IDå·ï¼Œvectorä¸­ä¸ºå ç”¨è¯¥æœåŠ¡å™¨çš„æ‰€æœ‰è™šæ‹Ÿæœºçš„idå·
+	unordered_map<int, float> m_hsServers_UseRate;//æœåŠ¡å™¨ä½¿ç”¨ç‡, pair(int=æœåŠ¡å™¨IDï¼Œ float=æœåŠ¡å™¨ä½¿ç”¨ç‡)
+	unordered_map<string, int> m_vVM_information;// ä¼˜å…ˆé˜Ÿåˆ—ï¼Œè®°å½•æ‰€æœ‰éƒ¨ç½²æœåŠ¡å™¨ string=è™šæ‹Ÿæœºid int=è™šæ‹ŸæœºCPU+å†…å­˜
 
-	//CloudResources(const CloudResources&){}//¸´ÖÆ¹¹Ôìº¯Êı
-	//CloudResources &operator=(const CloudResources&){}//ÔËËã·ûÖØÔØ
+	vector<string> m_vPurchase_order;// æ¯å¤©è´­ä¹°çš„æœåŠ¡å™¨é¡ºåº
+	vector<pair<string, int>> m_vEachDay_purchase; // æ¯å¤©è´­ä¹°çš„æœåŠ¡å™¨ä¿¡æ¯ string=æœåŠ¡å™¨å‹å·ï¼Œint=è¯¥å‹å·æœåŠ¡å™¨è´­ä¹°æ•°é‡
+	vector<pair<int, int>> m_vOrder;//æ˜ å°„å…³ç³»è¡¨
+	vector<pair<int, int>> m_vVirtualMachine_Warehousing;// æ¯å¤©è™šæ‹Ÿæœºå…¥åº“ä¿¡æ¯ï¼Œpair{è™šæ‹Ÿæœºå•ŠIDï¼Œpair{ä¿å­˜è™šæ‹Ÿæœºæ‰€åœ¨çš„æœåŠ¡å™¨IDï¼Œæ˜¯å¦åŒèŠ‚ç‚¹ 0ï¼šåŒèŠ‚ç‚¹ï¼Œ1ï¼šå•èŠ‚ç‚¹åœ¨Aï¼Œ2ï¼šå•èŠ‚ç‚¹åœ¨Bï¼‰}}
+	vector<pair<string, pair<int, int>>> m_vEachDay_Migration;//æ¯å¤©è¿ç§»çš„è™šæ‹Ÿæœºä¿¡æ¯ï¼Œstring=è™šæ‹Ÿæœºidï¼Œvector([0]:ç›®çš„æœåŠ¡å™¨IDï¼›[1]:æ‰€åœ¨èŠ‚ç‚¹ï¼Œ1ï¼šå•èŠ‚ç‚¹åœ¨Aï¼Œ2ï¼šå•èŠ‚ç‚¹åœ¨B)
+	//CloudResources(const CloudResources&){}//å¤åˆ¶æ„é€ å‡½æ•°
+	//CloudResources &operator=(const CloudResources&){}//è¿ç®—ç¬¦é‡è½½
 
 public:
-	CloudResources(const string& sTxt_address);//¹¹Ôìº¯Êı£¬¶ÁÈ¡txtÎÄ±¾ĞÅÏ¢
-	CloudResources(); //±ê×¼ÊäÈë¹¹Ôìº¯Êı
-	void print();// ±ê×¼Êä³ö´òÓ¡
-	vector<string> Information_processing(const string& strLine) const;// ´¦ÀíÎÄ±¾ĞÅÏ¢
-	vector<int> Str_to_Int(const vector<string>& strLine) const;// ÌáÈ¡·şÎñÆ÷ºÍĞéÄâ»úµÄÊı×ÖĞÅÏ¢£¨CPUºËÊı,ÄÚ´æ´óĞ¡,Ó²¼ş³É±¾,Ã¿ÈÕÄÜºÄ³É±¾£©
-	void run(const vector<string>& vRequest, const int iRequest_num);
-	void add(const vector<string>& strAdd_information);// ÎªĞéÄâ»ú¿ª±Ù×ÊÔ´
-	void del(const vector<string>& strDel_information);// É¾³ıĞéÄâ»ú
-	int isExist(const vector<pair<int, int>>& vTable, int iNumber);// Ñ°ÕÒÓ³Éä¹ØÏµ
-	vector<pair<int, int>> deal_serial_number(const vector<string>& vPurchase, const vector<pair<string, int>>& vEachDay_purchase);// ¶ÔÃ¿Ìì¹ºÂòµÄ·şÎñÆ÷½øĞĞÖØĞÂ±àºÅ
-	string find_optimal_server(const int& iCPU_demand, const int& iMemory_demand);// ¹ºÂòĞÂµÄ·şÎñÆ÷
+	CloudResources(const string& sTxt_address);//æ„é€ å‡½æ•°ï¼Œè¯»å–txtæ–‡æœ¬ä¿¡æ¯
+	CloudResources(); //æ ‡å‡†è¾“å…¥æ„é€ å‡½æ•°
+	void print();// æ ‡å‡†è¾“å‡ºæ‰“å°
+	vector<string> Information_processing(const string& strLine) const;// å¤„ç†æ–‡æœ¬ä¿¡æ¯
+	vector<int> Str_to_Int(const vector<string>& strLine) const;// æå–æœåŠ¡å™¨å’Œè™šæ‹Ÿæœºçš„æ•°å­—ä¿¡æ¯ï¼ˆCPUæ ¸æ•°,å†…å­˜å¤§å°,ç¡¬ä»¶æˆæœ¬,æ¯æ—¥èƒ½è€—æˆæœ¬ï¼‰
+	void run(const vector<string>& vRequest);
+	void add(const vector<string>& strAdd_information);// ä¸ºè™šæ‹Ÿæœºå¼€è¾Ÿèµ„æº
+	void find_optimal_insert_server(vector<int>& vInformation, const int iDemand_CPU_num, const int iDemand_Memory_size, int iIS_dual_node, int iIs_empty);// å¯»æ‰¾æœ€ä½³éƒ¨ç½²è™šæ‹Ÿæœºçš„æœåŠ¡å™¨
+	void deploy(const vector<int>& vInformation, const int iDemand_CPU_num, const int iDemand_Memory_size);// è¿›è¡Œè™šæ‹Ÿæœºéƒ¨ç½²
+	void del(const vector<string>& strDel_information);// åˆ é™¤è™šæ‹Ÿæœº
+	int isExist(const vector<pair<int, int>>& vTable, int iNumber);// å¯»æ‰¾æ˜ å°„å…³ç³»
+	vector<pair<int, int>> deal_serial_number(const vector<string>& vPurchase, const vector<pair<string, int>>& vEachDay_purchase);// å¯¹æ¯å¤©è´­ä¹°çš„æœåŠ¡å™¨è¿›è¡Œé‡æ–°ç¼–å·
+	string purchase_optimal_server(const int& iCPU_demand, const int& iMemory_demand);// è´­ä¹°æ–°çš„æœåŠ¡å™¨
+
+	vector<pair<int, float>>::iterator find_serverID_ptr(int serverID);//åœ¨m_hsServers_UseRateä¸­å¯»æ‰¾æœåŠ¡å™¨idå¯¹åº”çš„ä½ç½®
+	void migration_init();//è¿ç§»åˆå§‹åŒ–å·¥ä½œï¼Œç¡®å®šè¦è¿ç§»çš„æœåŠ¡å™¨ï¼Œå¹¶å°†è¦è¿ç§»çš„æœåŠ¡å™¨æŒ‰ç…§è´Ÿè½½ç‡æ’åºï¼Œç­‰å¾…è¿ç§»
+	int migration_deploy(const string& VM_ID, const string& VM_type);//è¿ç§»éƒ¨ç½²ï¼Œå°†å¾…è¿ç§»çš„æœåŠ¡å™¨ä¸Šé¢çš„è™šæ‹Ÿæœºè¿ç§»åˆ°å…¶å®ƒæœåŠ¡å™¨ä¸Šé¢
+
 };
 
-//¹¹Ôìº¯Êı£¬¶ÁÈ¡txtÎÄ±¾ĞÅÏ¢
+
+//æ„é€ å‡½æ•°ï¼Œè¯»å–txtæ–‡æœ¬ä¿¡æ¯
 CloudResources::CloudResources(const string& sTxt_address)
 {
-	// Àà³ÉÔ±³õÊ¼»¯
+	// ç±»æˆå‘˜åˆå§‹åŒ–
 	m_iServers_num = 0;
 	m_iVirtualMachines_num = 0;
 	m_iRequestDays = 0;
-	// m_iAllCost = 0;
+	m_iKnown_request_days = 0;
+
+	m_vEachDay_Migration.reserve(500);
+	m_vEachDay_purchase.reserve(5000);
+	m_vOrder.reserve(10000);
+	m_vPurchase_order.reserve(5000);
+	m_vVirtualMachine_Warehousing.reserve(20000);
 
 	ifstream infile;
-	infile.open(sTxt_address.data());// ¶ÁÈ¡txtÎÄ¼ş
-	assert(infile.is_open());   // ÈôÊ§°Ü,ÔòÊä³ö´íÎóÏûÏ¢,²¢ÖÕÖ¹³ÌĞòÔËĞĞ 
+	infile.open(sTxt_address.data());// è¯»å–txtæ–‡ä»¶
+	assert(infile.is_open());   // è‹¥å¤±è´¥,åˆ™è¾“å‡ºé”™è¯¯æ¶ˆæ¯,å¹¶ç»ˆæ­¢ç¨‹åºè¿è¡Œ 
 
-	// ÅĞ¶ÏÊäÈëĞÅÏ¢ 
-	// iDigit_Num = 0£º½ÓÏÂÀ´Ã¿ĞĞÎª·şÎñÆ÷ĞÅÏ¢
-	// iDigit_Num = 1£º½ÓÏÂÀ´Ã¿ĞĞÎªĞéÄâ»úĞÅÏ¢
-	// iDigit_Num = 2£º´¦ÀíÓÃ»§ÇëÇó×ÜÌìÊı
-	// iDigit_Num > 3: ½ÓÏÂÀ´Ã¿ĞĞÎªÃ¿ÌìµÄÓÃ»§ÇëÇó
+	// åˆ¤æ–­è¾“å…¥ä¿¡æ¯ 
+	// iDigit_Num = 0ï¼šæ¥ä¸‹æ¥æ¯è¡Œä¸ºæœåŠ¡å™¨ä¿¡æ¯
+	// iDigit_Num = 1ï¼šæ¥ä¸‹æ¥æ¯è¡Œä¸ºè™šæ‹Ÿæœºä¿¡æ¯
+	// iDigit_Num = 2ï¼šå¤„ç†ç”¨æˆ·è¯·æ±‚æ€»å¤©æ•°
+	// iDigit_Num > 3: æ¥ä¸‹æ¥æ¯è¡Œä¸ºæ¯å¤©çš„ç”¨æˆ·è¯·æ±‚
 
 	iDigit_Num = 0;
-	string sEachLine;//¼ÇÂ¼txtµÄÆäÖĞÒ»ĞĞ
+	string sEachLine;//è®°å½•txtçš„å…¶ä¸­ä¸€è¡Œ
+
 	while (getline(infile, sEachLine))
 	{
-		int sum = atoi(sEachLine.c_str());//¶ÁÈ¡Êı×Ö
 		if (iDigit_Num == 0)
-		{// ½ÓÏÂÀ´Ã¿ĞĞÎª·şÎñÆ÷ĞÅÏ¢
+		{// æ¥ä¸‹æ¥æ¯è¡Œä¸ºæœåŠ¡å™¨ä¿¡æ¯
+			int sum = atoi(sEachLine.c_str());//è¯»å–æ•°å­—
 			while (sum > 0 && getline(infile, sEachLine))
 			{
 				vector<string> vLine_information = Information_processing(sEachLine);
@@ -80,7 +100,8 @@ CloudResources::CloudResources(const string& sTxt_address)
 			iDigit_Num++;
 		}
 		else if (iDigit_Num == 1)
-		{// ½ÓÏÂÀ´Ã¿ĞĞÎªĞéÄâ»úĞÅÏ¢
+		{// æ¥ä¸‹æ¥æ¯è¡Œä¸ºè™šæ‹Ÿæœºä¿¡æ¯
+			int sum = atoi(sEachLine.c_str());//è¯»å–æ•°å­—
 			while (sum > 0 && getline(infile, sEachLine))
 			{
 				vector<string> vLine_information = Information_processing(sEachLine);
@@ -91,24 +112,58 @@ CloudResources::CloudResources(const string& sTxt_address)
 			iDigit_Num++;
 		}
 		else if (iDigit_Num == 2)
-		{// ´¦ÀíÓÃ»§ÇëÇó×ÜÌìÊı
-			m_iRequestDays = sum;
+		{// å¤„ç†ç”¨æˆ·è¯·æ±‚æ€»å¤©æ•°
+			vector<string> vRequset = Information_processing(sEachLine);
+			m_iRequestDays = atoi(vRequset[0].c_str());
+			m_iKnown_request_days = atoi(vRequset[1].c_str());
+			int i = m_iKnown_request_days;
+			while (i > 0)
+			{
+				getline(infile, sEachLine);
+				int iToday_request_num = atoi(sEachLine.c_str());
+				while (iToday_request_num > 0 && getline(infile, sEachLine))
+				{
+					m_hsUserRequest[m_iKnown_request_days - i].push_back(sEachLine);
+					iToday_request_num--;
+				}
+				i--;
+			}
 			iDigit_Num++;
 		}
 		else
-		{// ½ÓÏÂÀ´Ã¿ĞĞÎªÃ¿ÌìµÄÓÃ»§ÇëÇó
-			int iRequest_num = sum;
-			int day = iDigit_Num - 3;// ÇëÇóµÄÌìÊı
-			while (sum > 0 && getline(infile, sEachLine))
+		{
+			int day = iDigit_Num - 3 + m_iKnown_request_days;
+			int iToday_request_num = atoi(sEachLine.c_str());
+			run(m_hsUserRequest[iDigit_Num - 3]);
+			while (iToday_request_num > 0 && getline(infile, sEachLine))
 			{
 				m_hsUserRequest[day].push_back(sEachLine);
-				sum--;
+				iToday_request_num--;
 			}
-			m_iToday_servers_num = m_iServers_num;// ¼ÇÂ¼µ±ÌìÎ´¹ºÂò·şÎñÆ÷Ç°µÄ·şÎñÆ÷×ÜÁ¿
-			run(m_hsUserRequest[day], iRequest_num);
 			iDigit_Num++;
+			if (day == m_iRequestDays - 1)
+			{
+				break;
+			}
 		}
+
 	}
+
+	int iRemaining_requests_num = m_iKnown_request_days;
+	while (iRemaining_requests_num > 0)
+	{
+		cout << iDigit_Num - 3 << endl;
+		//run(m_hsUserRequest[iDigit_Num - 3]);
+		iDigit_Num++;
+		iRemaining_requests_num--;
+	}
+	/*for (auto& server : m_hsRequested_Servers)
+	{
+		if (server.second.first.first < 0 || server.second.first.second < 0 || server.second.second.first < 0 || server.second.second.second < 0)
+		{
+			cout << endl << server.first << endl;
+		}
+	}*/
 	infile.close();
 }
 
@@ -117,21 +172,26 @@ CloudResources::CloudResources()
 	m_iServers_num = 0;
 	m_iVirtualMachines_num = 0;
 	m_iRequestDays = 0;
-	// m_iAllCost = 0;
 
-	// ÅĞ¶ÏÊäÈëĞÅÏ¢ 
-	// iDigit_Num = 0£º½ÓÏÂÀ´Ã¿ĞĞÎª·şÎñÆ÷ĞÅÏ¢
-	// iDigit_Num = 1£º½ÓÏÂÀ´Ã¿ĞĞÎªĞéÄâ»úĞÅÏ¢
-	// iDigit_Num = 2£º´¦ÀíÓÃ»§ÇëÇó×ÜÌìÊı
-	// iDigit_Num > 3: ½ÓÏÂÀ´Ã¿ĞĞÎªÃ¿ÌìµÄÓÃ»§ÇëÇó
+	m_vEachDay_Migration.reserve(500);
+	m_vEachDay_purchase.reserve(5000);
+	m_vOrder.reserve(10000);
+	m_vPurchase_order.reserve(5000);
+	m_vVirtualMachine_Warehousing.reserve(20000);
+	m_vVM_information.reserve(50000);
 
+	// åˆ¤æ–­è¾“å…¥ä¿¡æ¯ 
+	// iDigit_Num = 0ï¼šæ¥ä¸‹æ¥æ¯è¡Œä¸ºæœåŠ¡å™¨ä¿¡æ¯
+	// iDigit_Num = 1ï¼šæ¥ä¸‹æ¥æ¯è¡Œä¸ºè™šæ‹Ÿæœºä¿¡æ¯
+	// iDigit_Num = 2ï¼šå¤„ç†ç”¨æˆ·è¯·æ±‚æ€»å¤©æ•°
+	// iDigit_Num > 3: æ¥ä¸‹æ¥æ¯è¡Œä¸ºæ¯å¤©çš„ç”¨æˆ·è¯·æ±‚
 	iDigit_Num = 0;
-	string sEachLine;//¼ÇÂ¼txtµÄÆäÖĞÒ»ĞĞ
+	string sEachLine;//è®°å½•txtçš„å…¶ä¸­ä¸€è¡Œ
 	while (getline(cin, sEachLine))
 	{
-		int sum = atoi(sEachLine.c_str());//¶ÁÈ¡Êı×Ö
 		if (iDigit_Num == 0)
-		{// ½ÓÏÂÀ´Ã¿ĞĞÎª·şÎñÆ÷ĞÅÏ¢
+		{// æ¥ä¸‹æ¥æ¯è¡Œä¸ºæœåŠ¡å™¨ä¿¡æ¯
+			int sum = atoi(sEachLine.c_str());//è¯»å–æ•°å­—
 			while (sum > 0 && getline(cin, sEachLine))
 			{
 				vector<string> vLine_information = Information_processing(sEachLine);
@@ -142,7 +202,8 @@ CloudResources::CloudResources()
 			iDigit_Num++;
 		}
 		else if (iDigit_Num == 1)
-		{// ½ÓÏÂÀ´Ã¿ĞĞÎªĞéÄâ»úĞÅÏ¢
+		{// æ¥ä¸‹æ¥æ¯è¡Œä¸ºè™šæ‹Ÿæœºä¿¡æ¯
+			int sum = atoi(sEachLine.c_str());//è¯»å–æ•°å­—
 			while (sum > 0 && getline(cin, sEachLine))
 			{
 				vector<string> vLine_information = Information_processing(sEachLine);
@@ -152,31 +213,62 @@ CloudResources::CloudResources()
 			}
 			iDigit_Num++;
 		}
-		else if (iDigit_Num == 2)
-		{// ´¦ÀíÓÃ»§ÇëÇó×ÜÌìÊı
-			m_iRequestDays = sum;
-			iDigit_Num++;
-		}
 		else
-		{// ½ÓÏÂÀ´Ã¿ĞĞÎªÃ¿ÌìµÄÓÃ»§ÇëÇó
-			int iRequest_num = sum;
-			int day = iDigit_Num - 3;// ÇëÇóµÄÌìÊı
-			while (sum > 0 && getline(cin, sEachLine))
+		{// å¤„ç†ç”¨æˆ·è¯·æ±‚æ€»å¤©æ•°
+			vector<string> vRequset = Information_processing(sEachLine);
+			m_iRequestDays = atoi(vRequset[0].c_str());
+			m_iKnown_request_days = atoi(vRequset[1].c_str());
+			int i = m_iKnown_request_days;
+			while (i > 0)
 			{
-				m_hsUserRequest[day].push_back(sEachLine);
-				sum--;
+				getline(cin, sEachLine);
+				int iToday_request_num = atoi(sEachLine.c_str());
+				while (iToday_request_num > 0 && getline(cin, sEachLine))
+				{
+					m_hsUserRequest[m_iKnown_request_days - i].push_back(sEachLine);
+					iToday_request_num--;
+				}
+				i--;
 			}
-			run(m_hsUserRequest[day], iRequest_num);
 			iDigit_Num++;
+			break;
 		}
+	}
+
+	iDigit_Num = 0;
+	while (iDigit_Num + m_iKnown_request_days < m_iRequestDays)
+	{
+		int day = iDigit_Num + m_iKnown_request_days;
+		run(m_hsUserRequest[iDigit_Num]);
+		fflush(stdout);
+		getline(cin, sEachLine);
+		int iToday_request_num = atoi(sEachLine.c_str());
+		while (iToday_request_num > 0 && getline(cin, sEachLine))
+		{
+			m_hsUserRequest[day].push_back(sEachLine);
+			iToday_request_num--;
+		}
+		iDigit_Num++;
+	}
+
+	int iRemaining_requests_num = m_iKnown_request_days;
+	while (iRemaining_requests_num > 0)
+	{
+		run(m_hsUserRequest[iDigit_Num]);
+		iDigit_Num++;
+		iRemaining_requests_num--;
 	}
 }
 
-// Êä³ö´òÓ¡
+// è¾“å‡ºæ‰“å°
 void CloudResources::print()
 {
+
+	vector<pair<int, int>> vTmpOrder = deal_serial_number(m_vPurchase_order, m_vEachDay_purchase);
+	m_vOrder.insert(m_vOrder.end(), vTmpOrder.begin(), vTmpOrder.end());// å¯»æ‰¾è´­ä¹°é¡ºåºä¸è´­ä¹°è®°å½•çš„æ˜ å°„å…³ç³»
+
 	if (!m_vEachDay_purchase.empty())
-	{// µ±Ìì¹ºÂòÁË·şÎñÆ÷
+	{// å½“å¤©è´­ä¹°äº†æœåŠ¡å™¨
 		int iPurchase_num = m_vEachDay_purchase.size();
 		cout << "(" << "purchase, " << iPurchase_num << ")" << endl;
 		for (const auto& server : m_vEachDay_purchase)
@@ -189,27 +281,51 @@ void CloudResources::print()
 		cout << "(" << "purchase, " << 0 << ")" << endl;
 	}
 
-	cout << "(" << "migration, " << 0 << ")" << endl;
+	if (!m_vEachDay_Migration.empty())
+	{//å½“å¤©è¿ç§»äº†è™šæ‹Ÿæœº
+		int imigration_num = m_vEachDay_Migration.size();
+		cout << "(" << "migration, " << imigration_num << ")" << endl;
 
-	vector<pair<int, int>> vTmpOrder = deal_serial_number(m_vPurchase_order, m_vEachDay_purchase);
-	m_vOrder.insert(m_vOrder.end(), vTmpOrder.begin(), vTmpOrder.end());// Ñ°ÕÒ¹ºÂòË³ĞòÓë¹ºÂò¼ÇÂ¼µÄÓ³Éä¹ØÏµ
+		for (const auto& migration : m_vEachDay_Migration)
+		{
+			if (migration.second.second == 0)//åŒèŠ‚ç‚¹
+			{
+				int iReal_server_id = isExist(m_vOrder, migration.second.first);
+				cout << "(" << migration.first << ", " << iReal_server_id << ")" << endl;
+			}
+			else if (migration.second.second == 1)//å•èŠ‚ç‚¹A
+			{
+				int iReal_server_id = isExist(m_vOrder, migration.second.first);
+				cout << "(" << migration.first << ", " << iReal_server_id << ", " << "A" << ")" << endl;
+			}
+			else//å•èŠ‚ç‚¹B
+			{
+				int iReal_server_id = isExist(m_vOrder, migration.second.first);
+				cout << "(" << migration.first << ", " << iReal_server_id << ", " << "B" << ")" << endl;
+			}
+		}
+	}
+	else
+	{
+		cout << "(" << "migration, " << 0 << ")" << endl;
+	}
 
 	if (!m_vVirtualMachine_Warehousing.empty())
-	{// µ±ÌìÓĞĞéÄâ»úÈë¿â
+	{// å½“å¤©æœ‰è™šæ‹Ÿæœºå…¥åº“
 		for (const auto& id : m_vVirtualMachine_Warehousing)
 		{
 			if (id.second == 0)
-			{// Ë«½Úµã
+			{// åŒèŠ‚ç‚¹
 				int iReal_server_id = isExist(m_vOrder, id.first);
 				cout << "(" << iReal_server_id << ")" << endl;
 			}
 			else if (id.second == 1)
-			{// µ¥½Úµã²¿ÊğÔÚA
+			{// å•èŠ‚ç‚¹éƒ¨ç½²åœ¨A
 				int iReal_server_id = isExist(m_vOrder, id.first);
 				cout << "(" << iReal_server_id << ", " << "A" << ")" << endl;
 			}
 			else
-			{// µ¥½Úµã²¿ÊğÔÚB
+			{// å•èŠ‚ç‚¹éƒ¨ç½²åœ¨B
 				int iReal_server_id = isExist(m_vOrder, id.first);
 				cout << "(" << iReal_server_id << ", " << "B" << ")" << endl;
 			}
@@ -217,7 +333,7 @@ void CloudResources::print()
 	}
 }
 
-//´¦ÀíÎÄ±¾ĞÅÏ¢
+//å¤„ç†æ–‡æœ¬ä¿¡æ¯
 vector<string> CloudResources::Information_processing(const string& strLine) const
 {
 	int iSize = strLine.size();
@@ -231,32 +347,35 @@ vector<string> CloudResources::Information_processing(const string& strLine) con
 			int j = i;
 			while (i < iSize && strLine[i] != ',' && strLine[i] != ' ' && strLine[i] != ')') i++;
 			string strTmpStr = strLine.substr(j, i - j);
-			vResult.push_back(strTmpStr);
+			vResult.emplace_back(strTmpStr);
 		}
 	}
 	return vResult;
 }
 
-// ÌáÈ¡·şÎñÆ÷ºÍĞéÄâ»úµÄÊı×ÖĞÅÏ¢£¨CPUºËÊı,ÄÚ´æ´óĞ¡,Ó²¼ş³É±¾,Ã¿ÈÕÄÜºÄ³É±¾£©
+// æå–æœåŠ¡å™¨å’Œè™šæ‹Ÿæœºçš„æ•°å­—ä¿¡æ¯ï¼ˆCPUæ ¸æ•°,å†…å­˜å¤§å°,ç¡¬ä»¶æˆæœ¬,æ¯æ—¥èƒ½è€—æˆæœ¬ï¼‰
 vector<int> CloudResources::Str_to_Int(const vector<string>& strLine) const
 {
 	vector<int> result;
 	for (const auto& str : strLine)
 	{
-		result.push_back(atoi(str.c_str()));
+		result.emplace_back(atoi(str.c_str()));
 	}
 	return result;
 }
 
 
-// ´¦ÀíÃ¿ÌìµÄÇëÇó
-void CloudResources::run(const vector<string>& vRequest, const int iRequest_num)
+// å¤„ç†æ¯å¤©çš„è¯·æ±‚
+void CloudResources::run(const vector<string>& vRequest)
 {
-	//ÊäÈë£º vRequest£ºµ±ÌìËùÓĞ¿ª±ÙĞéÄâ»úÇëÇó iRequest_num£ºµ±ÌìÇëÇóÊıÁ¿
-	m_iToday_servers_num = m_iServers_num;// ¼ÇÂ¼µ±ÌìÎ´¹ºÂò·şÎñÆ÷Ç°µÄ·şÎñÆ÷×ÜÁ¿
-	m_vEachDay_purchase.clear();// Çå¿Õ¹ºÂòĞÅÏ¢
-	m_vPurchase_order.clear();// Çå¿Õ¹ºÂòË³Ğò
-	m_vVirtualMachine_Warehousing.clear();// Çå¿ÕÈë¿âĞÅÏ¢
+
+	migration_init();
+	m_iToday_servers_num = m_iServers_num;
+	m_vEachDay_purchase.clear();
+	m_vPurchase_order.clear();
+	m_vVirtualMachine_Warehousing.clear();
+
+	int iRequest_num = vRequest.size();
 	for (int i = 0; i < iRequest_num; i++)
 	{
 		vector<string> iCur_request = Information_processing(vRequest[i]);
@@ -269,136 +388,258 @@ void CloudResources::run(const vector<string>& vRequest, const int iRequest_num)
 			del(iCur_request);
 		}
 	}
-
 	print();
+	m_vEachDay_Migration.clear();
 }
 
-// ÎªĞéÄâ»ú¿ª±Ù×ÊÔ´
+
+// ä¸ºè™šæ‹Ÿæœºå¼€è¾Ÿèµ„æº
 void CloudResources::add(const vector<string>& strAdd_information)
 {
-	// ÊäÈë£ºĞéÄâ»úĞÅÏ¢
-	string strDemand_VirtualMachine_name = strAdd_information[1];// »ñÈ¡ËùĞèĞéÄâ»úĞÍºÅ
-	string iDemand_VirtualMachine_id = strAdd_information[2];// ĞéÄâ»úID
-	int iDemand_CPU_num = m_hsVirtualMachines[strDemand_VirtualMachine_name][0];// »ñÈ¡ËùĞèĞéÄâ»úµÄCPUÊıÄ¿
-	int iDemand_Memory_size = m_hsVirtualMachines[strDemand_VirtualMachine_name][1];// »ñÈ¡ËùĞèĞéÄâ»úµÄÄÚ´æ´óĞ¡
-	int iIS_Dual_node = m_hsVirtualMachines[strDemand_VirtualMachine_name][2];
-	for (auto& sever : m_hsRequested_Servers)
-	{// ±éÀúÒÑ¹ºµÄ·şÎñÆ÷£¬ÊÇ·ñÄÜ·ÅÈëĞéÄâ»ú
-		if (iIS_Dual_node == 0)
-		{// ¸ÃĞéÄâ»úÎªµ¥½Úµã²¿Êğ
-			if (sever.second.first.first >= iDemand_CPU_num && sever.second.first.second >= iDemand_Memory_size)
-			{// µ±Ç°·şÎñÆ÷A½ÚµãÄÜÒÔ·ÅÈëĞéÄâ»ú
-				sever.second.first.first -= iDemand_CPU_num;// µ±Ç°·şÎñÆ÷A½ÚµãCPU¼õÉÙ
-				sever.second.first.second -= iDemand_Memory_size;// µ±Ç°·şÎñÆ÷A½ÚµãÄÚ´æ¼õÉÙ
+	string strDemand_VirtualMachine_name = strAdd_information[1];// è·å–æ‰€éœ€è™šæ‹Ÿæœºå‹å·
+	string iDemand_VirtualMachine_id = strAdd_information[2];// è™šæ‹ŸæœºID
+	int iDemand_CPU_num = m_hsVirtualMachines[strDemand_VirtualMachine_name][0];// è·å–æ‰€éœ€è™šæ‹Ÿæœºçš„CPUæ•°ç›®
+	int iDemand_Memory_size = m_hsVirtualMachines[strDemand_VirtualMachine_name][1];// è·å–æ‰€éœ€è™šæ‹Ÿæœºçš„å†…å­˜å¤§å°
+	m_vVM_information[iDemand_VirtualMachine_id] = iDemand_CPU_num + iDemand_Memory_size;
+	int iIS_Dual_node = m_hsVirtualMachines[strDemand_VirtualMachine_name][2];// è™šæ‹Ÿæœºæ˜¯å¦æ˜¯å•èŠ‚ç‚¹éƒ¨ç½²
+	vector<int> vCur_server_information = { -1, -1, 2147483647 };// å­˜æ”¾è™šæ‹Ÿæœºéƒ¨ç½²ä½ç½® 0ï¼šæœåŠ¡å™¨ID 1ï¼šåº”éƒ¨ç½²èŠ‚ç‚¹ä½ç½® 2ï¼šå½“å‰æœåŠ¡å™¨CPUæˆ–å†…å­˜çš„å·® 
 
-				//ĞéÄâ»úÈë¿â
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = sever.first;
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 1;
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].second = strDemand_VirtualMachine_name;
-				m_iVirtualMachines_num++;
-				m_vVirtualMachine_Warehousing.push_back({ sever.first,1 });
-				return;// ÎŞĞè¹ºÂòĞÂ·şÎñÆ÷£¬ÍË³ö
-			}
-			if (sever.second.second.first >= iDemand_CPU_num && sever.second.second.second >= iDemand_Memory_size)
-			{// µ±Ç°·şÎñÆ÷B½ÚµãÄÜÒÔ·ÅÈëĞéÄâ»ú
-				sever.second.second.first -= iDemand_CPU_num;// µ±Ç°·şÎñÆ÷B½ÚµãCPU¼õÉÙ
-				sever.second.second.second -= iDemand_Memory_size;// µ±Ç°·şÎñÆ÷B½ÚµãÄÚ´æ¼õÉÙ
-
-				//ĞéÄâ»úÈë¿â
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = sever.first;
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 2;
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].second = strDemand_VirtualMachine_name;
-				m_iVirtualMachines_num++;
-				m_vVirtualMachine_Warehousing.push_back({ sever.first,2 });
-				return;// ÎŞĞè¹ºÂòĞÂ·şÎñÆ÷£¬ÍË³ö
-			}
-		}
-		else
-		{// ¸ÃĞéÄâ»úÎªË«½Úµã²¿Êğ
-			if (sever.second.first.first >= iDemand_CPU_num / 2 && sever.second.first.second >= iDemand_Memory_size / 2 && sever.second.second.first >= iDemand_CPU_num / 2 && sever.second.second.second >= iDemand_Memory_size / 2)
-			{// µ±Ç°·şÎñÆ÷ÄÜÒÔ·ÅÈëĞéÄâ»ú
-				sever.second.first.first -= iDemand_CPU_num / 2;// µ±Ç°·şÎñÆ÷A½ÚµãCPU¼õÉÙ
-				sever.second.first.second -= iDemand_Memory_size / 2;// µ±Ç°·şÎñÆ÷A½ÚµãÄÚ´æ¼õÉÙ
-				sever.second.second.first -= iDemand_CPU_num / 2;// µ±Ç°·şÎñÆ÷A½ÚµãCPU¼õÉÙ
-				sever.second.second.second -= iDemand_Memory_size / 2;// µ±Ç°·şÎñÆ÷A½ÚµãÄÚ´æ¼õÉÙ
-
-				//ĞéÄâ»úÈë¿â
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = sever.first;
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 0;
-				m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].second = strDemand_VirtualMachine_name;
-				m_iVirtualMachines_num++;
-				m_vVirtualMachine_Warehousing.push_back({ sever.first,0 });
-				return;// ÎŞĞè¹ºÂòĞÂ·şÎñÆ÷£¬ÍË³ö
-			}
-		}
+	find_optimal_insert_server(vCur_server_information, iDemand_CPU_num, iDemand_Memory_size, iIS_Dual_node, 1);// åœ¨éç©ºæœåŠ¡å™¨ä¸Šå¯»æ‰¾æœ€ä½³è™šæ‹Ÿæœºéƒ¨ç½²ä½ç½®
+	if (vCur_server_information[0] != -1)
+	{
+		deploy(vCur_server_information, iDemand_CPU_num, iDemand_Memory_size);
+		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = vCur_server_information[0];
+		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = vCur_server_information[1];
+		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].second = strDemand_VirtualMachine_name;
+		m_vVirtualMachine_Warehousing.push_back({ vCur_server_information[0],vCur_server_information[1] });
+		m_hsServers_UseInfo[vCur_server_information[0]].push_back(iDemand_VirtualMachine_id);//å°†è™šæ‹Ÿæœºidè®°å½•åˆ°å¯¹åº”çš„æœåŠ¡å™¨ä¸Š
+		m_iVirtualMachines_num++;
+		return;
 	}
 
-	// Èç¹ûµ±Ç°ËùÓĞ·şÎñÆ÷Ê£ÓàCPUÊıÁ¿»òÔòÊ£ÓàÄÚ´æ´óĞ¡²»¹»¿ª±ÙĞÂµÄĞéÄâ»ú£¬¹ºÂòĞÂµÄ·şÎñÆ÷
-	string strDemand_server_name = find_optimal_server(iDemand_CPU_num, iDemand_Memory_size);// »ñÈ¡×î¼Ñ¹ºÂòµÄ·şÎñÆ÷ĞÍºÅ
+	find_optimal_insert_server(vCur_server_information, iDemand_CPU_num, iDemand_Memory_size, iIS_Dual_node, 0);// åœ¨ç©ºé—²æœåŠ¡å™¨ä¸Šå¯»æ‰¾æœ€ä½³è™šæ‹Ÿæœºéƒ¨ç½²ä½ç½®
+	if (vCur_server_information[0] != -1)
+	{
+		deploy(vCur_server_information, iDemand_CPU_num, iDemand_Memory_size);
+		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = vCur_server_information[0];
+		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = vCur_server_information[1];
+		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].second = strDemand_VirtualMachine_name;
+		m_vVirtualMachine_Warehousing.push_back({ vCur_server_information[0],vCur_server_information[1] });
+		m_hsServers_UseInfo[vCur_server_information[0]].emplace_back(iDemand_VirtualMachine_id);//å°†è™šæ‹Ÿæœºidè®°å½•åˆ°å¯¹åº”çš„æœåŠ¡å™¨ä¸Š
+		m_hsServers_IdleState[vCur_server_information[0]].first = 1;// å°†è¯¥æœåŠ¡å™¨ç½®ä¸ºå·¥ä½œçŠ¶æ€
+		m_iVirtualMachines_num++;
+		return;
+	}
+
+	// å¦‚æœå½“å‰æ‰€æœ‰æœåŠ¡å™¨å‰©ä½™CPUæ•°é‡æˆ–åˆ™å‰©ä½™å†…å­˜å¤§å°ä¸å¤Ÿå¼€è¾Ÿæ–°çš„è™šæ‹Ÿæœºï¼Œè´­ä¹°æ–°çš„æœåŠ¡å™¨
+	string strDemand_server_name = purchase_optimal_server(iDemand_CPU_num, iDemand_Memory_size);// è·å–æœ€ä½³è´­ä¹°çš„æœåŠ¡å™¨å‹å·
+	m_hsServers_IdleState[m_iServers_num] = { 1,strDemand_server_name };//å°†æ–°ç”³è¯·çš„æœåŠ¡å™¨ç½®ä¸ºå·¥ä½œçŠ¶æ€
+	m_hsServers_UseRate[m_iServers_num] = iDemand_CPU_num / float(m_hsServers[strDemand_server_name][0]) + iDemand_Memory_size / float(m_hsServers[strDemand_server_name][1]);//è®¡ç®—æœåŠ¡å™¨è´Ÿè½½ç‡
+	m_hsServers_UseInfo[m_iServers_num].emplace_back(iDemand_VirtualMachine_id);//å°†è™šæ‹Ÿæœºidè®°å½•åˆ°å¯¹åº”çš„æœåŠ¡å™¨ä¸Š
+
+
+	int iA_node_CPU_num = m_hsServers[strDemand_server_name][0] / 2;// AèŠ‚ç‚¹CPUæ•°ç›®
+	int iA_node_Memory_size = m_hsServers[strDemand_server_name][1] / 2;// AèŠ‚ç‚¹å†…å­˜å¤§å°
+	int iB_node_CPU_num = m_hsServers[strDemand_server_name][0] / 2;// BèŠ‚ç‚¹CPUæ•°ç›®
+	int iB_node_Memory_size = m_hsServers[strDemand_server_name][1] / 2;// BèŠ‚ç‚¹å†…å­˜å¤§å°
 
 	if (iIS_Dual_node == 0)
-	{// µ¥½Úµã¶¼¼ÓÈëĞÂ¹º·şÎñÆ÷µÄA½Úµã
+	{// å•èŠ‚ç‚¹éƒ½åŠ å…¥æ–°è´­æœåŠ¡å™¨çš„AèŠ‚ç‚¹
 
-		// ·şÎñÆ÷Èë¿â
-		m_hsRequested_Servers[m_iServers_num].first.first = m_hsServers[strDemand_server_name][0] / 2 - iDemand_CPU_num;
-		m_hsRequested_Servers[m_iServers_num].first.second = m_hsServers[strDemand_server_name][1] / 2 - iDemand_Memory_size;
-		m_hsRequested_Servers[m_iServers_num].second.first = m_hsServers[strDemand_server_name][0] / 2;
-		m_hsRequested_Servers[m_iServers_num].second.second = m_hsServers[strDemand_server_name][1] / 2;
-		// ĞéÄâ»úÈë¿â
+		// æœåŠ¡å™¨å…¥åº“
+		m_hsRequested_Servers[m_iServers_num].first.first = iA_node_CPU_num - iDemand_CPU_num;
+		m_hsRequested_Servers[m_iServers_num].first.second = iA_node_Memory_size - iDemand_Memory_size;
+		m_hsRequested_Servers[m_iServers_num].second.first = iB_node_CPU_num;
+		m_hsRequested_Servers[m_iServers_num].second.second = iB_node_Memory_size;
+		// è™šæ‹Ÿæœºå…¥åº“
 		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = m_iServers_num;
 		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 1;
 		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].second = strDemand_VirtualMachine_name;
 		m_vVirtualMachine_Warehousing.push_back({ m_iServers_num,1 });
 	}
 	else
-	{//Ë«½áµãĞéÄâ»ú
+	{//åŒç»“ç‚¹è™šæ‹Ÿæœº
 
-		// ·şÎñÆ÷Èë¿â
-		m_hsRequested_Servers[m_iServers_num].first.first = (m_hsServers[strDemand_server_name][0] - iDemand_CPU_num) / 2;
-		m_hsRequested_Servers[m_iServers_num].first.second = (m_hsServers[strDemand_server_name][1] - iDemand_Memory_size) / 2;
-		m_hsRequested_Servers[m_iServers_num].second.first = (m_hsServers[strDemand_server_name][0] - iDemand_CPU_num) / 2;
-		m_hsRequested_Servers[m_iServers_num].second.second = (m_hsServers[strDemand_server_name][1] - iDemand_Memory_size) / 2;
+		// æœåŠ¡å™¨å…¥åº“
+		m_hsRequested_Servers[m_iServers_num].first.first = iA_node_CPU_num - iDemand_CPU_num / 2;
+		m_hsRequested_Servers[m_iServers_num].first.second = iA_node_Memory_size - iDemand_Memory_size / 2;
+		m_hsRequested_Servers[m_iServers_num].second.first = iB_node_CPU_num - iDemand_CPU_num / 2;
+		m_hsRequested_Servers[m_iServers_num].second.second = iB_node_Memory_size - iDemand_Memory_size / 2;
 
-		// ĞéÄâ»úÈë¿â
+		// è™šæ‹Ÿæœºå…¥åº“
 		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = m_iServers_num;
 		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 0;
 		m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].second = strDemand_VirtualMachine_name;
 		m_vVirtualMachine_Warehousing.push_back({ m_iServers_num,0 });
 	}
-	m_iServers_num++;// ·şÎñÆ÷ÊıÁ¿+1
-	m_iVirtualMachines_num++;// ĞéÄâ»úÊıÁ¿+1
+	m_iServers_num++;// æœåŠ¡å™¨æ•°é‡+1
+	m_iVirtualMachines_num++;// è™šæ‹Ÿæœºæ•°é‡+1
+}
+
+// éƒ¨ç½²è™šæ‹Ÿæœºåˆ°æœ€åˆé€‚çš„æœåŠ¡å™¨ä¸Š
+void CloudResources::find_optimal_insert_server(vector<int>& vInformation, const int iDemand_CPU_num, const int iDemand_Memory_size, const int iIS_Dual_node, const int iIs_empty)
+{
+	// è¾“å…¥ï¼š
+	// vInformationï¼šå­˜æ”¾è™šæ‹Ÿæœºéƒ¨ç½²ä½ç½®(è¯¥vectoré•¿åº¦ä¸º3 0ï¼šæœåŠ¡å™¨ID 1ï¼šåº”éƒ¨ç½²èŠ‚ç‚¹ä½ç½® 2ï¼šå½“å‰æœåŠ¡å™¨CPUæˆ–å†…å­˜çš„å·®)
+	// iDemand_CPU_numï¼šè™šæ‹Ÿæœºçš„CPUæ•°ç›® 
+	// iDemand_Memory_sizeï¼šè™šæ‹Ÿæœºå†…å­˜å¤§å°
+	// iIS_Dual_nodeï¼šè™šæ‹Ÿæœºæ˜¯å¦éƒ¨ç½²åœ¨å•èŠ‚ç‚¹ï¼ˆiIS_Dual_node=0ï¼šå•èŠ‚ç‚¹éƒ¨ç½² iIS_Dual_node=1ï¼šåŒèŠ‚ç‚¹éƒ¨ç½² ï¼‰
+	// iIs_emptyï¼šéƒ¨ç½²è™šæ‹Ÿæœºåœ¨ç©ºæœåŠ¡å™¨è¿˜æ˜¯éç©ºæœåŠ¡å™¨ï¼ˆiIs_empty=0 éƒ¨ç½²è™šæ‹Ÿæœºåœ¨ç©ºæœåŠ¡å™¨ï¼ŒiIs_empty=1 éƒ¨ç½²è™šæ‹Ÿæœºåœ¨éç©ºæœåŠ¡å™¨ï¼‰
+	// è¾“å‡ºï¼š
+	// ä¿®æ”¹åçš„vInformation
+	for (const auto& server : m_hsRequested_Servers)
+	{// è™šæ‹Ÿæœºä¸ºå•èŠ‚ç‚¹éƒ¨ç½²
+		if (m_hsServers_IdleState[server.first].first == iIs_empty)
+		{// åˆ¤æ–­éƒ¨ç½²è™šæ‹Ÿæœºåœ¨ç©ºæœåŠ¡å™¨è¿˜æ˜¯éç©ºæœåŠ¡å™¨
+			if (iIS_Dual_node == 0)
+			{// è™šæ‹Ÿæœºä¸ºå•èŠ‚ç‚¹éƒ¨ç½²
+				int iCur_node_CPU_gap = server.second.first.first - server.second.second.first;// è®¡ç®—æœåŠ¡å™¨Aã€Bç»“ç‚¹CPUæ•°ç›®ä¹‹å·®
+				int iCur_node_Memory_gap = server.second.first.second - server.second.second.second;// è®¡ç®—æœåŠ¡å™¨Aã€Bç»“ç‚¹å†…å­˜å¤§å°ä¹‹å·®
+				if (iCur_node_CPU_gap > 0 && iCur_node_Memory_gap > 0
+					&& server.second.first.first >= iDemand_CPU_num && server.second.first.second >= iDemand_Memory_size
+					&& abs(iCur_node_CPU_gap - iDemand_CPU_num) + abs(iCur_node_Memory_gap - iDemand_Memory_size) < vInformation[2])
+				{// AèŠ‚ç‚¹CPUæ•°ç›®ã€å†…å­˜éƒ½å¤§äºBèŠ‚ç‚¹
+					vInformation[0] = server.first;
+					vInformation[1] = 1;
+					vInformation[2] = abs(iCur_node_CPU_gap - iDemand_CPU_num) + abs(iCur_node_Memory_gap - iDemand_Memory_size);
+				}
+				else if (iCur_node_CPU_gap < 0 && iCur_node_Memory_gap < 0
+					&& server.second.second.first >= iDemand_CPU_num && server.second.second.second >= iDemand_Memory_size
+					&& abs(-iCur_node_CPU_gap - iDemand_CPU_num) + abs(-iCur_node_Memory_gap - iDemand_Memory_size) < vInformation[2])
+				{// AèŠ‚ç‚¹CPUæ•°ç›®ã€å†…å­˜éƒ½å°äºBèŠ‚ç‚¹
+					vInformation[0] = server.first;
+					vInformation[1] = 2;
+					vInformation[2] = abs(-iCur_node_CPU_gap - iDemand_CPU_num) + abs(-iCur_node_Memory_gap - iDemand_Memory_size);
+				}
+				else
+				{// å…¶ä»–æƒ…å†µ
+					if (server.second.first.first >= iDemand_CPU_num && server.second.first.second >= iDemand_Memory_size)
+					{
+						int iA_node_remaining_CPU_num = server.second.first.first - iDemand_CPU_num;
+						int iA_node_remaining_Memory_num = server.second.first.second - iDemand_Memory_size;
+						if (iA_node_remaining_CPU_num + iA_node_remaining_Memory_num < vInformation[2])
+						{
+							vInformation[0] = server.first;
+							vInformation[1] = 1;
+							vInformation[2] = iA_node_remaining_CPU_num + iA_node_remaining_Memory_num;
+
+						}
+					}
+					if (server.second.second.first >= iDemand_CPU_num && server.second.second.second >= iDemand_Memory_size)
+					{
+						int iB_node_remaining_CPU_num = server.second.second.first - iDemand_CPU_num;
+						int iB_node_remaining_Memory_num = server.second.second.second - iDemand_Memory_size;
+						if (iB_node_remaining_CPU_num + iB_node_remaining_Memory_num < vInformation[2])
+						{
+							vInformation[0] = server.first;
+							vInformation[1] = 2;
+							vInformation[2] = iB_node_remaining_CPU_num + iB_node_remaining_Memory_num;
+
+						}
+					}
+				}
+			}
+			else
+			{// è™šæ‹Ÿæœºä¸ºåŒèŠ‚ç‚¹éƒ¨ç½²
+				int iANode_CPU_resource_gap = server.second.first.first - iDemand_CPU_num / 2;
+				int iANode_Memory_resource_gap = server.second.first.second - iDemand_Memory_size / 2;
+				int iBNode_CPU_resource_gap = server.second.second.first - iDemand_CPU_num / 2;
+				int iBNode_Memory_resource_gap = server.second.second.second - iDemand_Memory_size / 2;
+				if (iANode_CPU_resource_gap >= 0 && iANode_Memory_resource_gap >= 0
+					&& iBNode_CPU_resource_gap >= 0 && iBNode_Memory_resource_gap >= 0
+					&& iANode_CPU_resource_gap + iBNode_CPU_resource_gap + iANode_Memory_resource_gap + iBNode_Memory_resource_gap < vInformation[2])
+				{
+					vInformation[0] = server.first;
+					vInformation[1] = 0;
+					vInformation[2] = iANode_CPU_resource_gap + iBNode_CPU_resource_gap + iANode_Memory_resource_gap + iBNode_Memory_resource_gap;
+				}
+			}
+		}
+	}
+
+}
+
+// åœ¨å·²è´­çš„æœåŠ¡å™¨ä¸Šéƒ¨ç½²è™šæ‹Ÿæœº
+void CloudResources::deploy(const vector<int>& vInformation, const int iDemand_CPU_num, const int iDemand_Memory_size)
+{
+	// è¾“å…¥ï¼š
+	// vInformationï¼šè™šæ‹Ÿæœºéƒ¨ç½²ä½ç½®(è¯¥vectoré•¿åº¦ä¸º3 0ï¼šæœåŠ¡å™¨ID 1ï¼šåº”éƒ¨ç½²èŠ‚ç‚¹ä½ç½® 2ï¼šå½“å‰æœåŠ¡å™¨CPUæˆ–å†…å­˜çš„å·®)
+	// iDemand_CPU_numï¼šè™šæ‹Ÿæœºçš„CPUæ•°ç›® 
+	// iDemand_Memory_sizeï¼šè™šæ‹Ÿæœºå†…å­˜å¤§å°
+	switch (vInformation[1])
+	{
+	case 0:
+		m_hsRequested_Servers[vInformation[0]].first.first -= iDemand_CPU_num / 2;
+		m_hsRequested_Servers[vInformation[0]].first.second -= iDemand_Memory_size / 2;
+		m_hsRequested_Servers[vInformation[0]].second.first -= iDemand_CPU_num / 2;
+		m_hsRequested_Servers[vInformation[0]].second.second -= iDemand_Memory_size / 2;
+		break;
+	case 1:
+		m_hsRequested_Servers[vInformation[0]].first.first -= iDemand_CPU_num;
+		m_hsRequested_Servers[vInformation[0]].first.second -= iDemand_Memory_size;
+		break;
+	case 2:
+		m_hsRequested_Servers[vInformation[0]].second.first -= iDemand_CPU_num;
+		m_hsRequested_Servers[vInformation[0]].second.second -= iDemand_Memory_size;
+		break;
+	}
+	m_hsServers_UseRate[vInformation[0]] = (1 - (m_hsRequested_Servers[vInformation[0]].first.first + m_hsRequested_Servers[vInformation[0]].second.first) / float(m_hsServers[m_hsServers_IdleState[vInformation[0]].second][0]) +
+		1 - (m_hsRequested_Servers[vInformation[0]].first.second + m_hsRequested_Servers[vInformation[0]].second.second) / float(m_hsServers[m_hsServers_IdleState[vInformation[0]].second][1]));//è®¡ç®—æœåŠ¡å™¨è´Ÿè½½ç‡
 }
 
 
-// É¾³ıĞéÄâ»ú
+// åˆ é™¤è™šæ‹Ÿæœº
 void CloudResources::del(const vector<string>& strDel_information)
 {
-	string iCur_VirtualMachine_id = strDel_information[1];// µ±Ç°ĞéÄâ»úID
-	int iCur_VirtualMachine_to_Server_id = m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].first.first;// µ±Ç°ĞéÄâ»úËùÔÚ·şÎñÆ÷µÄID
-	int iIS_Dual_node = m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].first.second;// µ±Ç°ĞéÄâ»úµÄ½Úµã²¿ÊğÇé¿ö
-	int iCur_VirtualMachine_CPU_num = m_hsVirtualMachines[m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].second][0];// µ±Ç°ĞéÄâ»úCPUÊıÄ¿
-	int iCur_VirtualMachine_Memory_size = m_hsVirtualMachines[m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].second][1];// µ±Ç°ĞéÄâ»úÄÚ´æ´óĞ¡
+	string iCur_VirtualMachine_id = strDel_information[1];// å½“å‰è™šæ‹ŸæœºID
+	int iCur_VirtualMachine_to_Server_id = m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].first.first;// å½“å‰è™šæ‹Ÿæœºæ‰€åœ¨æœåŠ¡å™¨çš„ID
+	int iIS_Dual_node = m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].first.second;// å½“å‰è™šæ‹Ÿæœºçš„èŠ‚ç‚¹éƒ¨ç½²æƒ…å†µ
+	int iCur_VirtualMachine_CPU_num = m_hsVirtualMachines[m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].second][0];// å½“å‰è™šæ‹ŸæœºCPUæ•°ç›®
+	int iCur_VirtualMachine_Memory_size = m_hsVirtualMachines[m_hsRequested_VirtualMachines[iCur_VirtualMachine_id].second][1];// å½“å‰è™šæ‹Ÿæœºå†…å­˜å¤§å°
 	if (iIS_Dual_node == 0)
-	{//Ë«½Úµã²¿Êğ
+	{//åŒèŠ‚ç‚¹éƒ¨ç½²
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.first += iCur_VirtualMachine_CPU_num / 2;
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.second += iCur_VirtualMachine_Memory_size / 2;
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.first += iCur_VirtualMachine_CPU_num / 2;
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.second += iCur_VirtualMachine_Memory_size / 2;
 	}
 	else if (iIS_Dual_node == 1)
-	{// µ¥½Úµã²¿Êğ£¬ÇÒ²¿ÊğÔÚ·şÎñÆ÷A½áµãÉÏ
+	{// å•èŠ‚ç‚¹éƒ¨ç½²ï¼Œä¸”éƒ¨ç½²åœ¨æœåŠ¡å™¨Aç»“ç‚¹ä¸Š
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.first += iCur_VirtualMachine_CPU_num;
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.second += iCur_VirtualMachine_Memory_size;
 	}
 	else
-	{// µ¥½Úµã²¿Êğ£¬ÇÒ²¿ÊğÔÚ·şÎñÆ÷B½áµãÉÏ
+	{// å•èŠ‚ç‚¹éƒ¨ç½²ï¼Œä¸”éƒ¨ç½²åœ¨æœåŠ¡å™¨Bç»“ç‚¹ä¸Š
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.first += iCur_VirtualMachine_CPU_num;
 		m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.second += iCur_VirtualMachine_Memory_size;
 	}
+
+	if (m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.first + m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.first == (m_hsServers[m_hsServers_IdleState[iCur_VirtualMachine_to_Server_id].second])[0])
+	{//è‹¥åˆ é™¤è™šæ‹Ÿæœºä¹‹åä½¿å¾—æŸå°æœåŠ¡å™¨ç©ºé—²ã€‚ç½®æœåŠ¡å™¨çŠ¶æ€ä¸º0
+		m_hsServers_IdleState[iCur_VirtualMachine_to_Server_id].first = 0;
+	}
+
+	m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].erase(remove(m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].begin(),
+		m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].end(), iCur_VirtualMachine_id), m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].end());//åˆ é™¤å¯¹åº”æœåŠ¡å™¨ä¸Šé¢çš„è™šæ‹Ÿæœºè®°å½•
+
+	for (auto it = m_vVM_information.begin(); it != m_vVM_information.end();)
+	{
+		if (it->first == iCur_VirtualMachine_id)
+		{
+			m_vVM_information.erase(it);
+			break;
+		}
+		else
+		{
+			it++;
+		}
+	}
+
 	m_hsRequested_VirtualMachines.erase(iCur_VirtualMachine_id);
+	m_iVirtualMachines_num--;
 }
 
-// Ñ°±í
+// å¯»è¡¨
 int CloudResources::isExist(const vector<pair<int, int>>& vTable, int iNumber)
 {
 	for (const auto& member : vTable)
@@ -408,11 +649,11 @@ int CloudResources::isExist(const vector<pair<int, int>>& vTable, int iNumber)
 	return -1;
 }
 
-// µ±Ìì¹ºÂò·şÎñÆ÷Ë³ĞòÓ³Éä¹ØÏµ
+// å½“å¤©è´­ä¹°æœåŠ¡å™¨é¡ºåºæ˜ å°„å…³ç³»
 vector<pair<int, int>> CloudResources::deal_serial_number(const vector<string>& vPurchase, const vector<pair<string, int>>& vEachDay_purchase)
 {
-	// ÊäÈë£ºvPurchase£ºµ±Ìì¹ºÂò·şÎñÆ÷Ë³Ğò  vEachDay_purchase£ºµ±Ìì¹ºÂò·şÎñÆ÷¼ÇÂ¼
-	// Êä³ö£ºµ±Ìì¹ºÂò·şÎñÆ÷Ë³ĞòÓ³Éä¹ØÏµ
+	// è¾“å…¥ï¼švPurchaseï¼šå½“å¤©è´­ä¹°æœåŠ¡å™¨é¡ºåº  vEachDay_purchaseï¼šå½“å¤©è´­ä¹°æœåŠ¡å™¨è®°å½•
+	// è¾“å‡ºï¼šå½“å¤©è´­ä¹°æœåŠ¡å™¨é¡ºåºæ˜ å°„å…³ç³»
 	vector<pair<int, int>> vResult;
 	int iSum = m_iToday_servers_num;
 	int iSize = vPurchase.size();
@@ -431,41 +672,180 @@ vector<pair<int, int>> CloudResources::deal_serial_number(const vector<string>& 
 	return vResult;
 }
 
-// ¹ºÂò×î¼ÑµÄ·şÎñÆ÷£¨µ±Ç°ĞéÄâ»úËùĞèCPUºÍÄÚ´æµÄ5±¶´óĞ¡£©
-string CloudResources::find_optimal_server(const int& iCPU_demand, const int& iMemory_demand)
-{   // ÊäÈë£ºiCPU_demand£ºËùĞèCPUÊıÄ¿ iMemory_demand£ºËùĞèÄÚ´æ´óĞ¡
-	// Êä³ö£º¹ºÂòµÄ·şÎñÆ÷ĞÍºÅ
-	int iReal_CPU_demand = 3 * iCPU_demand;
-	int iReal_Memory_demand = 3 * iMemory_demand;
-	int iRelative_error = 2147483647;// ËùĞè·şÎñÆ÷CPUÊıÁ¿ºÍÄÚ´æ´óĞ¡µÄÏà¶ÔÎó²î
-	string result;
+// è´­ä¹°æœ€ä½³çš„æœåŠ¡å™¨
+string CloudResources::purchase_optimal_server(const int& iCPU_demand, const int& iMemory_demand)
+{   // è¾“å…¥ï¼šiCPU_demandï¼šæ‰€éœ€CPUæ•°ç›® iMemory_demandï¼šæ‰€éœ€å†…å­˜å¤§å°
+	// è¾“å‡ºï¼šè´­ä¹°çš„æœåŠ¡å™¨å‹å·
+	float iReal_CPU_demand = 2.6 * iCPU_demand;
+	float iReal_Memory_demand = 2.7 * iMemory_demand;
+	float fRelative_error = 2147483647.0;// æ‰€éœ€æœåŠ¡å™¨CPUæ•°é‡å’Œå†…å­˜å¤§å°çš„ç›¸å¯¹è¯¯å·®
+	string strResult;
 	for (const auto& server : m_hsServers)
-	{//±éÀúËùÓĞĞÍºÅµÄ·şÎñÆ÷
+	{// éå†æ‰€æœ‰å‹å·çš„æœåŠ¡å™¨
 		int iServerCPU_size = server.second[0];
 		int iServerMemory_siz = server.second[1];
-		int iError = abs(iReal_CPU_demand - iServerCPU_size) + abs(iReal_Memory_demand - iServerMemory_siz);
-		if (iError < iRelative_error)
+		float fError = abs(iReal_CPU_demand - iServerCPU_size) + abs(iReal_Memory_demand - iServerMemory_siz);
+		if (fError < fRelative_error && iServerCPU_size >= 2 * iCPU_demand && iServerMemory_siz >= 2 * iMemory_demand)
 		{
-			iRelative_error = iError;
-			result = server.first;
+			fRelative_error = fError;
+			strResult = server.first;
 		}
 	}
 
-	m_vPurchase_order.push_back(result);// ¼ÇÂ¼µ±Ìì¹ºÂòË³Ğò
+	m_vPurchase_order.emplace_back(strResult);// è®°å½•å½“å¤©è´­ä¹°é¡ºåº
 
 	for (auto& server : m_vEachDay_purchase)
-	{// ±éÀúµ±ÌìÒÑ¹º·şÎñÆ÷
-		if (server.first == result)
-		{// ¸ÃĞÍºÅ·şÎñÆ÷µ±ÌìÒÑ¾­¹ºÂò¹ı
-			server.second++;// ¸ÃĞÍºÅ·şÎñÆ÷µ±Ìì¹ºÂòÊıÁ¿+1
-			return result;
+	{// éå†å½“å¤©å·²è´­æœåŠ¡å™¨
+		if (server.first == strResult)
+		{// è¯¥å‹å·æœåŠ¡å™¨å½“å¤©å·²ç»è´­ä¹°è¿‡
+			server.second++;// è¯¥å‹å·æœåŠ¡å™¨å½“å¤©è´­ä¹°æ•°é‡+1
+			return strResult;
 		}
 	}
-	m_vEachDay_purchase.push_back({ result,1 });// // ¸ÃĞÍºÅ·şÎñÆ÷µ±ÌìÎ´¹ºÂò¹ı,¼ÓÈëµ±Ìì¹ºÂò¼ÇÂ¼
+	m_vEachDay_purchase.push_back({ strResult,1 });// è¯¥å‹å·æœåŠ¡å™¨å½“å¤©æœªè´­ä¹°è¿‡,åŠ å…¥å½“å¤©è´­ä¹°è®°å½•
 	//m_hsEachDay_purchase[result]++;
-	return result;
+	return strResult;
+}
+
+//è¿ç§»åˆå§‹åŒ–å·¥ä½œï¼Œç¡®å®šè¦è¿ç§»çš„æœåŠ¡å™¨ï¼Œå¹¶å°†è¦è¿ç§»çš„æœåŠ¡å™¨æŒ‰ç…§è´Ÿè½½ç‡æ’åºï¼Œç­‰å¾…è¿ç§»
+void CloudResources::migration_init()
+{
+	const int  migration_upper_limit = m_hsRequested_VirtualMachines.size() * 3 / 1000;//å¾…è¿ç§»è™šæ‹Ÿæœºä¸Šé™æ•°
+
+	vector<pair<int, float>> m_vmigration_serversSet;//å¾…è¿ç§»æœåŠ¡å™¨é›†åˆ
+
+	for (const auto& server : m_hsServers_UseRate)
+	{
+		if (server.second != 0.0)//server.secondä¸èƒ½ä¸º0
+		{
+			m_vmigration_serversSet.emplace_back(server);
+		}
+	}
+
+	sort(m_vmigration_serversSet.begin(), m_vmigration_serversSet.end(), [&](const pair<int, float>& lhs, const pair<int, float>& rhs)
+		{
+			return lhs.second < rhs.second;
+		});//å°†m_vmigration_serversSetä¸­çš„å…ƒç´ æŒ‰ç…§è´Ÿè½½ç‡ä»å°åˆ°å¤§æ’åºã€‚
+
+	int migration_state;//è¿ç§»çŠ¶æ€ï¼Œ1:æˆåŠŸï¼› -1:å¤±è´¥
+	int migrated_VM_num = 0;//å·²è¿ç§»è™šæ‹Ÿæœºæ•°é‡
+
+	for (int i = 0; migrated_VM_num < migration_upper_limit && i < m_vmigration_serversSet.size(); i++)
+	{//ä¾æ¬¡å¤„ç†è™šæ‹Ÿæœº
+		int iCur_server_id = m_vmigration_serversSet[i].first;
+		sort(m_hsServers_UseInfo[iCur_server_id].begin(), m_hsServers_UseInfo[iCur_server_id].end(), [&](const auto& x, const auto& y)
+			{
+				return m_vVM_information[x] < m_vVM_information[y];
+			});
+		m_hsServers_IdleState[iCur_server_id].first = 2;// å°†å½“å‰æœåŠ¡å™¨ç½®ä¸ºè¿ç§»çŠ¶æ€
+		for (int j = 0; j < m_hsServers_UseInfo[iCur_server_id].size();)
+		{
+			if (migrated_VM_num >= migration_upper_limit) break;
+			string imigration_VM_ID = m_hsServers_UseInfo[iCur_server_id][j];
+			migration_state = migration_deploy(imigration_VM_ID, m_hsRequested_VirtualMachines[imigration_VM_ID].second);
+			if (migration_state == 1)//è¯¥è™šæ‹Ÿæœºè¿ç§»æˆåŠŸ
+			{
+				migrated_VM_num++;
+			}
+			else
+			{
+				j++;
+			}
+		}
+
+		if (!m_hsServers_UseInfo[iCur_server_id].empty())
+		{// å¦‚æœæ—§æœåŠ¡å™¨éç©ºï¼Œç½®ä¸ºå·¥ä½œçŠ¶æ€
+			m_hsServers_IdleState[iCur_server_id].first = 1;
+		}
+		else
+		{// å¦‚æœæ—§æœåŠ¡å™¨ç©ºé—²ï¼Œç½®ä¸ºç©ºé—²çŠ¶æ€
+			m_hsServers_IdleState[iCur_server_id].first = 0;
+		}
+	}
 }
 
 
-#endif // !_ALG_H_
+//è¿ç§»éƒ¨ç½²ï¼Œå°†å¾…è¿ç§»çš„æœåŠ¡å™¨ä¸Šé¢çš„è™šæ‹Ÿæœºè¿ç§»åˆ°å…¶å®ƒæœåŠ¡å™¨ä¸Šé¢
+int CloudResources::migration_deploy(const string& VM_ID, const string& VM_type)
+{
+	// è¾“å…¥ï¼šè™šæ‹Ÿæœºä¿¡æ¯
+	string strDemand_VirtualMachine_name = VM_type;// è·å–æ‰€éœ€è™šæ‹Ÿæœºå‹å·
+	string iDemand_VirtualMachine_id = VM_ID;// è™šæ‹ŸæœºID
+	int iCur_VirtualMachine_to_Server_id = m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first;// å½“å‰è™šæ‹Ÿæœºæ‰€åœ¨æœåŠ¡å™¨çš„ID
+	int iCur_VirtualMachine_to_Server_node = m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second;// å½“å‰è™šæ‹Ÿæœºæ‰€åœ¨æœåŠ¡å™¨çš„èŠ‚ç‚¹
+	int iDemand_CPU_num = m_hsVirtualMachines[strDemand_VirtualMachine_name][0];// è·å–æ‰€éœ€è™šæ‹Ÿæœºçš„CPUæ•°ç›®
+	int iDemand_Memory_size = m_hsVirtualMachines[strDemand_VirtualMachine_name][1];// è·å–æ‰€éœ€è™šæ‹Ÿæœºçš„å†…å­˜å¤§å°
+	int iIS_Dual_node = m_hsVirtualMachines[strDemand_VirtualMachine_name][2];// è™šæ‹Ÿæœºæ˜¯å¦æ˜¯å•èŠ‚ç‚¹éƒ¨ç½²
+	vector<int> vCur_server_information = { -1, -1, 2147483647 };// å­˜æ”¾è™šæ‹Ÿæœºéƒ¨ç½²ä½ç½® 0ï¼šæœåŠ¡å™¨ID 1ï¼šåº”éƒ¨ç½²èŠ‚ç‚¹ä½ç½® 2ï¼šå½“å‰æœåŠ¡å™¨CPUæˆ–å†…å­˜çš„å·® 
+
+	find_optimal_insert_server(vCur_server_information, iDemand_CPU_num, iDemand_Memory_size, iIS_Dual_node, 1);// åœ¨éç©ºæœåŠ¡å™¨ä¸Šå¯»æ‰¾æœ€ä½³è™šæ‹Ÿæœºéƒ¨ç½²ä½ç½®
+
+	if (vCur_server_information[0] != -1)
+	{
+		switch (vCur_server_information[1])
+		{
+		case 0:
+			m_hsRequested_Servers[vCur_server_information[0]].first.first -= iDemand_CPU_num / 2;
+			m_hsRequested_Servers[vCur_server_information[0]].first.second -= iDemand_Memory_size / 2;
+			m_hsRequested_Servers[vCur_server_information[0]].second.first -= iDemand_CPU_num / 2;
+			m_hsRequested_Servers[vCur_server_information[0]].second.second -= iDemand_Memory_size / 2;
+			m_vEachDay_Migration.push_back({ iDemand_VirtualMachine_id ,{vCur_server_information[0],0} });//è®°å½•è¿ç§»ä¿¡æ¯
+			m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = vCur_server_information[0];//æ›´æ”¹è™šæ‹Ÿæœºéƒ¨ç½²ä¿¡æ¯
+			m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 0;//åŒèŠ‚ç‚¹
+			break;
+		case 1:
+			m_hsRequested_Servers[vCur_server_information[0]].first.first -= iDemand_CPU_num;
+			m_hsRequested_Servers[vCur_server_information[0]].first.second -= iDemand_Memory_size;
+			m_vEachDay_Migration.push_back({ iDemand_VirtualMachine_id ,{vCur_server_information[0],1} });//è®°å½•è¿ç§»ä¿¡æ¯ï¼ŒæœåŠ¡å™¨id,å•èŠ‚ç‚¹åœ¨A
+			m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = vCur_server_information[0];//æ›´æ”¹è™šæ‹Ÿæœºéƒ¨ç½²ä¿¡æ¯
+			m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 1;//å•èŠ‚ç‚¹åœ¨A
+			break;
+		case 2:
+			m_hsRequested_Servers[vCur_server_information[0]].second.first -= iDemand_CPU_num;
+			m_hsRequested_Servers[vCur_server_information[0]].second.second -= iDemand_Memory_size;
+			m_vEachDay_Migration.push_back({ iDemand_VirtualMachine_id ,{vCur_server_information[0],2} });//è®°å½•è¿ç§»ä¿¡æ¯ï¼ŒæœåŠ¡å™¨id,å•èŠ‚ç‚¹åœ¨B
+			m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.first = vCur_server_information[0];//æ›´æ”¹è™šæ‹Ÿæœºéƒ¨ç½²ä¿¡æ¯
+			m_hsRequested_VirtualMachines[iDemand_VirtualMachine_id].first.second = 2;//å•èŠ‚ç‚¹åœ¨B
+			break;
+		}
+		m_hsServers_UseInfo[vCur_server_information[0]].emplace_back(iDemand_VirtualMachine_id);//å°†è™šæ‹Ÿæœºidè®°å½•åˆ°å¯¹åº”çš„æ–°æœåŠ¡å™¨ä¸Š
+
+		// é‡æ–°è®¡ç®—æ–°æœåŠ¡å™¨çš„è´Ÿè½½ç‡
+
+		m_hsServers_UseRate[vCur_server_information[0]] = (1 - (m_hsRequested_Servers[vCur_server_information[0]].first.first + m_hsRequested_Servers[vCur_server_information[0]].second.first) / float(m_hsServers[m_hsServers_IdleState[vCur_server_information[0]].second][0])) +
+			(1 - (m_hsRequested_Servers[vCur_server_information[0]].first.second + m_hsRequested_Servers[vCur_server_information[0]].second.second) / float(m_hsServers[m_hsServers_IdleState[vCur_server_information[0]].second][1]));//è®¡ç®—æœåŠ¡å™¨è´Ÿè½½ç‡
+
+
+		// åœ¨æ—§æœåŠ¡å™¨ä¸Šåˆ é™¤è¯¥è™šæ‹Ÿæœº
+		if (iCur_VirtualMachine_to_Server_node == 0)
+		{
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.first += iDemand_CPU_num / 2;
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.second += iDemand_Memory_size / 2;
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.first += iDemand_CPU_num / 2;
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.second += iDemand_Memory_size / 2;
+		}
+		else if (iCur_VirtualMachine_to_Server_node == 1)
+		{
+
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.first += iDemand_CPU_num;
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.second += iDemand_Memory_size;
+		}
+		else
+		{
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.first += iDemand_CPU_num;
+			m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.second += iDemand_Memory_size;
+		}
+
+		// é‡æ–°è®¡ç®—æ—§æœåŠ¡å™¨çš„è´Ÿè½½ç‡
+		m_hsServers_UseRate[iCur_VirtualMachine_to_Server_id] = (1 - (m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.first + m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.first) / float(m_hsServers[m_hsServers_IdleState[iCur_VirtualMachine_to_Server_id].second][0])) +
+			(1 - (m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].first.second + m_hsRequested_Servers[iCur_VirtualMachine_to_Server_id].second.second) / float(m_hsServers[m_hsServers_IdleState[iCur_VirtualMachine_to_Server_id].second][1]));//è®¡ç®—æœåŠ¡å™¨è´Ÿè½½ç‡
+
+
+		m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].erase(remove(m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].begin(),
+			m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].end(), iDemand_VirtualMachine_id), m_hsServers_UseInfo[iCur_VirtualMachine_to_Server_id].end());//åˆ é™¤å¯¹åº”æœåŠ¡å™¨ä¸Šé¢çš„è™šæ‹Ÿæœºè®°å½•
+
+		return 1;//è¿ç§»æˆåŠŸ
+	}
+	return -1;//è¿ç§»å¤±è´¥
+}
 

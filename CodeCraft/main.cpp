@@ -4,8 +4,10 @@
 
 int main()
 {
-	CloudResources test("training-1.txt");
+	CloudResources test1("training-1.txt");
+	//CloudResources test2("training-2.txt");
 	//CloudResources test;
+
 
 	return 0;
 
